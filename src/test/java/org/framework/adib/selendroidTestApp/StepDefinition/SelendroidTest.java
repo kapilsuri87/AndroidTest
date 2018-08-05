@@ -5,16 +5,19 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Properties;
 
+import org.apache.log4j.xml.DOMConfigurator;
 import org.framework.adib.core.baseclass.BaseClass;
 import org.framework.adib.core.commonfunctions.CommonFunction;
 import org.framework.adib.core.commonfunctions.CommonFunctionAndroidImpl;
+import org.framework.adib.core.utilities.Log;
 import org.framework.adib.core.utilities.XlsReader;
 import org.framework.adib.selendroidTestApp.config.Config;
-import org.framework.adib.selendroidTestApp.pagesAndroidImpl.ConfirmRegistrationPage;
-import org.framework.adib.selendroidTestApp.pagesAndroidImpl.HomePage;
-import org.framework.adib.selendroidTestApp.pagesAndroidImpl.NewRegistrationPage;
+import org.framework.adib.selendroidTestApp.pages.ConfirmRegistrationPage;
+import org.framework.adib.selendroidTestApp.pages.HomePage;
+import org.framework.adib.selendroidTestApp.pages.NewRegistrationPage;
 import org.openqa.selenium.Alert;
 
+import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -29,6 +32,7 @@ public class SelendroidTest extends BaseClass {
     String name, userName, email, pwd, lang, adds;
     int rowNum = 0;
     public static XlsReader XLR = null;
+    Scenario scenario=null;
     CommonFunction com_fun = null;
     @SuppressWarnings("rawtypes")
     public static AppiumDriver driver;
@@ -43,13 +47,20 @@ public class SelendroidTest extends BaseClass {
 
     @SuppressWarnings("unchecked")
     @Before
-    public void beforeMethod() throws Exception {
-
+    public void beforeMethod(Scenario scenario) throws Exception {
+        
+        DOMConfigurator.configure("log4j.xml");
+        
+        //getting instance of scenario
+        this.scenario = scenario;
+        Log.startTestCase(scenario.getName());
+        
         // Initialize Configurations
         CONFIG= Config.initializeConfig();
 
         // Initialize App location
         appUrl = (System.getProperty("user.dir") + CONFIG.getProperty("APP_URL"));
+        Log.info("App location:"+ appUrl);
 
         // Initialize Appium Driver
         BaseClass.openApplication(appUrl, CONFIG);
@@ -72,6 +83,7 @@ public class SelendroidTest extends BaseClass {
     @SuppressWarnings("unchecked")
     @Given("^User opens Selendroid application$")
     public void user_opens_Selendroid_application() throws Throwable {
+        
         hp = new HomePage((AndroidDriver<AndroidElement>) driver);
     }
 
