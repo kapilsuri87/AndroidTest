@@ -47,10 +47,6 @@
 			<artifactId>gson</artifactId>
 			<version>2.8.5</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.codehaus.mojo/findbugs-maven-plugin -->
-		<!-- <dependency> <groupId>org.codehaus.mojo</groupId> <artifactId>findbugs-maven-plugin</artifactId> 
-			<version>3.0.5</version> </dependency> -->
-
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-server</artifactId>
@@ -64,12 +60,8 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
+		<!-- <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> 
+			<version>4.12</version> <scope>test</scope> </dependency> -->
 
 		<!-- https://mvnrepository.com/artifact/info.cukes/cucumber-core -->
 		<dependency>
@@ -84,12 +76,8 @@
 			<version>1.2.5</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/info.cukes/cucumber-junit -->
-		<dependency>
-			<groupId>info.cukes</groupId>
-			<artifactId>cucumber-junit</artifactId>
-			<version>1.2.5</version>
-			<scope>test</scope>
-		</dependency>
+		<!-- <dependency> <groupId>info.cukes</groupId> <artifactId>cucumber-junit</artifactId> 
+			<version>1.2.5</version> <scope>test</scope> </dependency> -->
 		<!-- https://mvnrepository.com/artifact/info.cukes/cucumber-jvm-deps -->
 		<dependency>
 			<groupId>info.cukes</groupId>
@@ -141,9 +129,26 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.6</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-pmd-plugin -->
-		<!-- <dependency> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-pmd-plugin</artifactId> 
-			<version>3.9.0</version> </dependency> -->
+		<!-- https://mvnrepository.com/artifact/info.cukes/cucumber-testng -->
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-testng</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.testng/testng -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.14.3</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
 
 	</dependencies>
 
@@ -233,31 +238,37 @@
 					<maxmem>256m</maxmem>
 				</configuration>
 			</plugin>
-		    <plugin>
-                    <artifactId>maven-clean-plugin</artifactId>
-                    <version>3.1.0</version>
-                    <executions>
-                        <execution>
-                            <id>auto-clean</id>
-                            <phase>clean</phase>
-                            <goals>
-                                <goal>clean</goal>
-                            </goals>
-                            <configuration>
-                                <filesets>
-                                    <fileset>
-                                        <directory>${basedir}/logs/</directory>
-                                        <includes>*.log</includes>
-                                    </fileset>
-                                    <fileset>
-                                        <directory>${basedir}/screenshots/</directory>
-                                        <includes>*.png</includes>
-                                    </fileset>
-                                </filesets>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>auto-clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<configuration>
+							<filesets>
+								<fileset>
+									<directory>${basedir}/logs/</directory>
+									<includes>*.log</includes>
+								</fileset>
+								<fileset>
+									<directory>${basedir}/screenshots/</directory>
+									<includes>*.png</includes>
+								</fileset>
+							</filesets>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-plugin</artifactId> 
+				<version>2.22.0</version> <configuration> <parallel>classes</parallel> <forkMode>perThread</forkMode> 
+				<threadCount>5</threadCount> <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine> 
+				<includes> <include>**/*Runner.java</include> </includes> </configuration> 
+				</plugin> -->
 		</plugins>
 	</build>
 </project>

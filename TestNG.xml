@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+ 
+<suite name="Selendroid-Android-Test-Suite" parallel="tests" thread-count="5">
+ 
+   <test name="Test-Nexus-5_API-19">
+        <parameter name="EMU_NAME" value="Nexus_5_API_19" />
+        <parameter name="PLATFORM_VERSION" value="4.2.2" />
+        <parameter name="APPIUM_PORT" value="4723" />
+        <classes>
+            <class name="org.framework.adib.selendroidTestApp.Runner.TestRunner" />
+        </classes>
+    </test>
+ 
+   <test name="Test-Nexus-5_API-26">
+        <parameter name="EMU_NAME" value="Nexus_5_API_26" />
+        <parameter name="PLATFORM_VERSION" value="8.0" />
+        <parameter name="APPIUM_PORT" value="4724" />
+        <classes>
+            <class name="org.framework.adib.selendroidTestApp.Runner.TestRunner" />
+        </classes>
+    </test>
+ 
+</suite>
