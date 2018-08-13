@@ -1,7 +1,7 @@
 package org.framework.adib.selendroidTestApp.StepDefinition;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
