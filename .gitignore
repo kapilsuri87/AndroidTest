@@ -1,4 +1,7 @@
-/target/
-/logs/
-/screenshot/
+target/
+logs/
+screenshots/
 .DS_Store
+.checkstyle
+.project
+test-output/
