@@ -9,7 +9,6 @@ import org.framework.adib.core.commonfunctions.CommonFunctionAndroidImpl;
 import org.framework.adib.core.utilities.Log;
 import org.framework.adib.core.utilities.XlsReader;
 import org.framework.adib.selendroidTestApp.config.Config;
-import org.testng.Reporter;
 
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -23,13 +22,10 @@ public class Setup {
     
     public static XlsReader XLR = null;
     Scenario scenario = null;
-    Properties CONFIG;
+    public static Properties CONFIG;
     static CommonFunction com_fun = null;
     protected static String appUrl;
-
     
-
-    @SuppressWarnings("unchecked")
     @Before
     public void beforeMethod(Scenario scenario) throws Exception {
         
@@ -45,15 +41,10 @@ public class Setup {
         // Initialize App location
         appUrl = (System.getProperty("user.dir") + CONFIG.getProperty("APP_URL"));
         Log.info("App location:" + appUrl);
-        
-        
-       //Reading parameters from xml files.
-        String EMU_NAME= Reporter.getCurrentTestResult().getTestContext().getCurrentXmlTest().getParameter("EMU_NAME");
-        String PLATFORM_VERSION =Reporter.getCurrentTestResult().getTestContext().getCurrentXmlTest().getParameter("PLATFORM_VERSION");
-        String APPIUM_PORT=  Reporter.getCurrentTestResult().getTestContext().getCurrentXmlTest().getParameter("APPIUM_PORT");
+       
         // Initialize Appium Driver
-        BaseClass.openApplication(appUrl, CONFIG, EMU_NAME, PLATFORM_VERSION, APPIUM_PORT);
-        driver = (AndroidDriver<AndroidElement>)BaseClass.getDriver();
+        BaseClass.openApplication(appUrl, CONFIG);
+        driver =BaseClass.getAndroidDriver();
         
         // Initialize XCEL for Data
         XLR = new XlsReader(System.getProperty("user.dir") + CONFIG.getProperty("DATA_FILE"));
@@ -63,13 +54,17 @@ public class Setup {
     }
     
     @After
-    public void afterMethod() {
+    public void afterMethod(Scenario scenario) {
+        if (scenario.isFailed())
+        {
+            Log.info("Test Case failed");
+        }
         if (driver != null) {
             driver.quit();
         }
-       /* if (BaseClass.checkIfServerIsRunnning(Integer.parseInt(CONFIG.getProperty("APPIUM_PORT")))) {
+       if (BaseClass.checkIfServerIsRunnning(Integer.parseInt(CONFIG.getProperty("APPIUM_PORT")))) {
             BaseClass.stopServer();
-        }*/
+       }
     }
     
 }

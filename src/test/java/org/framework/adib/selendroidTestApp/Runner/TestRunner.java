@@ -1,19 +1,18 @@
 package org.framework.adib.selendroidTestApp.Runner;
 
-import org.testng.annotations.Test;
+import org.junit.runner.RunWith;
 
 import cucumber.api.CucumberOptions;
-import cucumber.api.testng.AbstractTestNGCucumberTests;
+import cucumber.api.junit.Cucumber;
 
-//@RunWith(Cucumber.class)
+@RunWith(Cucumber.class)
 @CucumberOptions(features = {"src/test/java/org/framework/adib/selendroidTestApp/Feature/MyApplicationFeature.feature" }, 
                         glue = {"org/framework/adib/selendroidTestApp/StepDefinition" }, 
                         plugin = {"html:target/cucumber-html-report" }, 
+                        tags= {"@Smoke"},
                         dryRun = false, monochrome = false)
 
-@Test
-public class TestRunner extends AbstractTestNGCucumberTests {
-    
+public class TestRunner {
 }
 
 // ORed : tags = {"@Smoke, @Regression"} To add condition for OR operator

@@ -9,7 +9,7 @@ Feature: Smoke Selendroid Test
     When user clicks on Confirm button
     Then homepage should be displayed
     
-   @Prod
+   @Smoke
    Scenario: Validate Toast message
     Given User opens Selendroid application
     When User clicks on Display a Toast button

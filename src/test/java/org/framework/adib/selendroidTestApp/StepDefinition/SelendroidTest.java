@@ -1,13 +1,10 @@
 package org.framework.adib.selendroidTestApp.StepDefinition;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
+import java.util.HashMap;
+
 import org.framework.adib.core.baseclass.BaseClass;
 import org.framework.adib.core.commonfunctions.CommonFunction;
 import org.framework.adib.core.utilities.XlsReader;
@@ -15,14 +12,21 @@ import org.framework.adib.selendroidTestApp.pages.ConfirmRegistrationPage;
 import org.framework.adib.selendroidTestApp.pages.HomePage;
 import org.framework.adib.selendroidTestApp.pages.NewRegistrationPage;
 
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+
 public class SelendroidTest extends BaseClass {
     
     CommonFunction com_fun = Setup.com_fun;
  
     // Variables for accessing XLS methods
     XlsReader XLR = Setup.XLR;
+    
     String name, userName, email, pwd, lang, adds;
     int rowNum = 0;
+    
+    HashMap<String, String> data = null;
     
     // Page objects for all the application pages
     protected HomePage hp;
@@ -32,9 +36,9 @@ public class SelendroidTest extends BaseClass {
     @Given("^User opens Selendroid application$")
     public void user_opens_Selendroid_application() throws Throwable {
         
-        hp = new HomePage((AndroidDriver<AndroidElement>) Setup.driver);
+        hp = new HomePage(Setup.driver);
     }
-    
+
     @When("^User clicks on Create New User icon$")
     public void user_clicks_on_Create_New_User_icon() throws Throwable {
         rp = hp.clickNewRegBttn();
@@ -42,34 +46,19 @@ public class SelendroidTest extends BaseClass {
     
     @When("^Unser provides valid details and click on submit button$")
     public void unser_provides_valid_details_and_click_on_submit_button() throws Throwable {
-        int rowCount = Setup.XLR.getRowCount("New_Registration");
-        for (int i = 2; i <= rowCount; i++) {
-            if (XLR.getCellData("New_Registration", "Is_Used", i).isEmpty()) {
-                name = XLR.getCellData("New_Registration", "Name", i);
-                userName = XLR.getCellData("New_Registration", "UserName", i);
-                email = XLR.getCellData("New_Registration", "Email", i);
-                pwd = XLR.getCellData("New_Registration", "Password", i);
-                lang = XLR.getCellData("New_Registration", "Language", i);
-                adds = XLR.getCellData("New_Registration", "Add_Required", i);
-                rowNum = i;
-                break;
-            }
-        }
-        if (rowNum == 0) {
-            throw new NullPointerException("Please provide a valid record in the data file!!!");
-        }
+        data = rp.readRegistrationData(XLR);
         
-        rp.clearTypeUserName(userName);
+        rp.clearTypeUserName(data.get("userName"));
         
-        rp.clearTypeEmailText(email);
+        rp.clearTypeEmailText(data.get("email"));
         
-        rp.clearTypePwdText(pwd);
+        rp.clearTypePwdText(data.get("pwd"));
         
-        rp.clearTypeNameText(name);
+        rp.clearTypeNameText(data.get("name"));
         
         com_fun.hideKeyBoard();
         
-        if (adds.equalsIgnoreCase("TRUE")) {
+        if (data.get("adds").equalsIgnoreCase("TRUE")) {
             if (rp.addsCkBoxValue() != true) {
                 rp.selectCkBoxAdds();
             }
@@ -80,12 +69,12 @@ public class SelendroidTest extends BaseClass {
     
     @Then("^User details should be populated correctly on verify screen$")
     public void user_details_should_be_populated_correctly_on_verify_screen() throws Throwable {
-        assertEquals(cp.getTextNameVerText(), name);
-        assertEquals(cp.getTextUserNameVerText(), userName);
-        assertEquals(cp.getTextEmailVerText(), email);
-        assertEquals(cp.getTextPasswordVerText(), pwd);
-        assertEquals(cp.getTextAcceptAddsVerText(), adds);
-        assertEquals(cp.getTextLangVerText(), lang);
+        assertEquals(cp.getTextNameVerText(), data.get("name"));
+        assertEquals(cp.getTextUserNameVerText(), data.get("userName"));
+        assertEquals(cp.getTextEmailVerText(), data.get("email"));
+        assertEquals(cp.getTextPasswordVerText(), data.get("pwd"));
+        //assertEquals(cp.getTextAcceptAddsVerText(), data.get("adds"));
+        assertEquals(cp.getTextLangVerText(), data.get("lang"));
         XLR.setCellData("New_Registration", "Is_Used", rowNum, "Used");
     }
     
