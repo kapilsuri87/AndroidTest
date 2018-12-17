@@ -24,7 +24,7 @@ public class Config {
             String platformProperty = System.getProperty("platform");
 
             String platform = (platformProperty != null) ? platformProperty : "Test_Pixel_2";
-
+            System.out.println("Hello");
             /*
              * Loading the properties from Sessions.yml file. Note: If a config parameter is
              * not provided then default parameter will be picked as Test_Pixel_2
@@ -46,6 +46,7 @@ public class Config {
         FileInputStream fis = null;
         Map<String, Object> platforms = null;
         Map<String, String> configs = null;
+        System.out.println("Hello123");
         try {
             fis = new FileInputStream(System.getProperty("user.dir") + "/" + filename);
             platforms = (Map<String, Object>) new Yaml().load(fis);
@@ -76,6 +77,7 @@ public class Config {
      */
 
     public static void loadDeviceProperty(Map<String, String> properties) {
+    	 System.out.println("Hello456");
         for (Entry<String, String> config : properties.entrySet()) {
             CONFIG.setProperty(config.getKey(), config.getValue());
         }
