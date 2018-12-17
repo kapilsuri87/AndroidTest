@@ -13,8 +13,10 @@ public class Config {
 
     /**
      * Method to initialize configuration.
-     * 
+     *
      */
+
+    /// testing
     public static Properties initializeConfig() throws IOException {
         FileInputStream fis = null;
         try {
@@ -68,11 +70,10 @@ public class Config {
 
     /**
      * Method to load properties specific for the emulator/device
-     * 
+     *
      * @param: properties
-     *             the map of emulator properties
-     *             read from the Sessions.yml file
-     * 
+     *             the map of emulator properties read from the Sessions.yml file
+     *
      */
 
     public static void loadDeviceProperty(Map<String, String> properties) {
